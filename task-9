@@ -1,0 +1,8 @@
+- S3 website endpoint:
+http://m.b.s3mentorship-program-week-11.s3-website-us-east-1.amazonaws.com
+
+-  CloudFront distribution endpoint:
+https://d15tkub1bq0ufq.cloudfront.net
+
+-R53 record:
+https://majdin-buric.awsbosnia.com/

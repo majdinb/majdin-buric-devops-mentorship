@@ -1,0 +1,81 @@
+EVENT DRIVEN 
+monoliticke aplikacije naspram Tierd aplikacija su neefikasne, neisplative i nesigurne.
+rastavljene aplikacije su lakse lakse za kontrolisati, jer svaki tier radi zasebno i moze se zasebno skalirati.
+Mogucnost dodavanja load balancera između tiera, što omogućava horizontalno skaliranje. 
+komunikacija se vrši preko load balancera.
+
+Queue je sredstvo komuniciranja između tiera
+sadrzi informacije (poruke) 
+ FIFO first in first out
+Queue lenght - broj poruka unutar queue
+skaliranje se vrsi na osnovu dužine queue
+poruke se brišu nakon processuiranja
+kako se queue smanjuje tako se vrši i scale-in
+stavljanjem queue između tier-a , vrsi se decoupling
+
+Razbijanje monolitičke arhitekture i korak dalje, dovodi do mikroservisa.
+oni rade indiividualne zadatke
+
+
+LAMBDA
+Function as a service FaaS
+Lambda funkcija je kod koji lambda pokrece
+
+kad se kreira lambda funkcija potrebno je odrediti koji runtime koristi (python 3.8, java, go, Ruby)
+funkcija je okinuta unutar toog runtime enviroment-a
+definisemo i kolicinu resursa koju runtime koristi
+lambda se naplacuje samo za vrijeme koje su resursi koristeni (po pozivu/okidanju)
+koristi se za kreiranje event-driven arhitekture
+svaki put kad je pozvana, Lambda se izvrsava u novom enviroment-u
+Lambda moze biti pokrenuta 15 minuta.
+Lambda koristi IAM role za komuniciranje sa ostalim aws resursima.
+logovi iz Lambde idu u CloudWatch logs
+metrika je u ClaudWatch
+
+3 nacina izazivanja Lambda funkcije
+ synchronous, asynchronous, event source mappings
+
+
+Event driven bridge- if x happens, y times, then do z 
+
+
+SERVERLESS ARCHITECTURE
+low overhead 
+kombinacija mikroservisa i event driven arhitekture
+kolekcija malih i specijaliziranih funkcija
+odvijaju se u stateless i ephermal enviroment
+obave posao i dostave izvjjestaj 
+event driven - izvrsavaju se samo kad su potrebne
+
+
+SNS
+komponenta koja se koristi uz veliki broj servisa
+pub-sub service
+koordinira slanje poruka
+sns topic - publisher salje poruku, subscriber se pretplacuje na topic i prima poruku
+SSE server side encription
+mogucnost postavljanja topic policy 
+
+
+Step functions
+omogucava kreiranje state machines
+max duration 1 godina
+IAM role omogucavaju rad
+succeed & fail state. wait state, choice, paralel, map, task state
+task state omogucava da se obavi akcija 
+integrise se sa drugim servisima
+koordinira rad stalih servisa
+
+
+SQS obezbjedjuje managed message queues
+highly avaliable
+standard i FIFO queue 
+klijent salje poruku u queue, drugi klijent povlaci poruku
+visability timeout, nakon obrade poruke ona gubi vidljivost, i nakon određenog perioda ponovo se pojavljuje.
+ded leatter queue
+jedna komponenta salje poruku u queue, druga je prima
+odlično za skaliranje ( zavisnosti od dužine queue, broja poruka)
+ standard queue daaje barem jednu isporuku, ali ne garantuje red
+FIFO garantuje red i tacno jednu isporuku
+naaplata po requestu (zrtvuje se performans u zamjenu za red)
+
